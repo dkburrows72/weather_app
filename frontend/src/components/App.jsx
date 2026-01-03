@@ -5,15 +5,20 @@ import Input from "./Input";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import key from "./key";
+import { usePersistedState } from "../hooks/usePersistedState";
 
 const cityHeadings = ["City", "State", "Code"];
 const weatherHeadings = ["City", "Day", "Night", "Min Temp", "Max Temp"];
 
 function App() {
   const [formData, setFormData] = useState({ city: "", state: "" });
-  const [locationCodes, setLocationCodes] = useState([
+  const [locationCodes, setLocationCodes] = usePersistedState("locationCodes", [
     { city: "Queensbury", state: "NY", key: "2128555" },
   ]);
+
+  // const [locationCodes, setLocationCodes] = useState([
+  //   { city: "Queensbury", state: "NY", key: "2128555" },
+  // ]);
   const [weatherData, setWeatherData] = useState([]);
 
   function getLocationCode(location, adminCode, key) {
