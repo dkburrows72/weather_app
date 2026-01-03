@@ -18,22 +18,10 @@ function App() {
 
   function getLocationCode(location, adminCode, key) {
     axios
-      .get("https://dataservice.accuweather.com/locations/v1/search", {
-        headers: { Authorization: "Bearer " + key },
-        params: {
-          q: location,
-          adminCode: adminCode,
-          alias: 2,
-          countryCode: "US",
-          offset: -1,
-          format: "json",
-          details: false,
-          language: "en-us",
-        },
-      })
+      .get("http://localhost:3000/location/" + location + "/" + adminCode)
       .then((response) => {
         console.log(response);
-        const locationKey = response.data[0].Key;
+        const locationKey = response.data.key;
         console.log(locationKey);
         if (locationKey) {
           setLocationCodes((locationCodes) => [
@@ -47,29 +35,16 @@ function App() {
     setWeatherData([]);
     for (const loc in locations) {
       axios
-        .get(
-          "https://dataservice.accuweather.com/forecasts/v1/daily/1day/" +
-            locations[loc],
-          {
-            headers: { Authorization: "Bearer " + key },
-            params: {
-              metric: false,
-              details: false,
-              language: "en-us",
-              format: "json",
-            },
-          }
-        )
+        .get("http://localhost:3000/weather/" + locations[loc])
         .then((response) => {
-          const { Day, Night, Temperature } = response.data.DailyForecasts[0];
+          const { id, day, night, minTemp, maxTemp } = response.data;
           const weather = {
             location: locationCodes[loc].city,
-            day: Day.IconPhrase,
-            night: Night.IconPhrase,
-            minTemp: Temperature.Minimum.Value,
-            maxTemp: Temperature.Maximum.Value,
+            day: day,
+            night: night,
+            minTemp: minTemp,
+            maxTemp: maxTemp,
           };
-
           setWeatherData((weatherData) => [...weatherData, weather]);
         });
     }
@@ -115,7 +90,7 @@ function App() {
           />
         </div>
         <button className="btn btn-primary btn-sm mb-4" onClick={handleClick}>
-          Search
+          Add
         </button>
       </form>
       <table className="table">

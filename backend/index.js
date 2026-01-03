@@ -1,6 +1,7 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
+import cors from "cors";
 import key from "./key.js";
 
 const app = express();
@@ -11,6 +12,7 @@ const config = {
   headers: { Authorization: `Bearer ${key}` },
 };
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/location/:city/:state", async (req, res) => {
