@@ -1,0 +1,2 @@
+https://dataservice.accuweather.com/forecasts/v1/daily/1day/2128555?metric=false&details=false&language=en-us&format=json
+
