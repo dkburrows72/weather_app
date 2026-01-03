@@ -3,7 +3,6 @@ import axios from "axios";
 import "./App.css";
 import Input from "./Input";
 import TableHead from "./TableHead";
-import TableHeadW from "./TableHeadW";
 import TableBody from "./TableBody";
 import key from "./key";
 
@@ -120,7 +119,7 @@ function App() {
         </button>
       </form>
       <table className="table">
-        <TableHead />
+        <TableHead headings={cityHeadings} />
         <TableBody items={locationCodes} />
       </table>
       <button
@@ -135,7 +134,7 @@ function App() {
         Get Weather
       </button>
       <table className="table">
-        <TableHeadW />
+        <TableHead headings={weatherHeadings} />
         <TableBody items={weatherData} />
       </table>
     </div>
