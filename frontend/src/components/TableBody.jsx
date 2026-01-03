@@ -5,8 +5,8 @@ function TableBody({ items }) {
     <tbody>
       {items.map((item) => (
         <tr key={item.key}>
-          {Object.values(item).map((value) => (
-            <td>{value}</td>
+          {Object.values(item).map((value, index) => (
+            <td key={index}>{value}</td>
           ))}
         </tr>
       ))}
