@@ -2,10 +2,9 @@ import react, { useState } from "react";
 import axios from "axios";
 import "./App.css";
 import Input from "./Input";
-import CityRow from "./CityRow";
-import WeatherRow from "./WeatherRow";
 import TableHead from "./TableHead";
 import TableHeadW from "./TableHeadW";
+import TableBody from "./TableBody";
 import key from "./key";
 
 const cityHeadings = ["City", "State", "Code"];
@@ -122,11 +121,7 @@ function App() {
       </form>
       <table className="table">
         <TableHead />
-        <tbody>
-          {locationCodes.map((element) => {
-            return <CityRow key={element.key} element={element} />;
-          })}
-        </tbody>
+        <TableBody items={locationCodes} />
       </table>
       <button
         className="btn btn-primary btn-sm mb-4"
@@ -141,11 +136,7 @@ function App() {
       </button>
       <table className="table">
         <TableHeadW />
-        <tbody>
-          {weatherData.map((element) => {
-            return <WeatherRow key={element.key} element={element} />;
-          })}
-        </tbody>
+        <TableBody items={weatherData} />
       </table>
     </div>
   );
