@@ -2,7 +2,9 @@ import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
 import cors from "cors";
-import key from "./key.js";
+import "dotenv/config";
+
+const key = process.env.API_KEY;
 
 const app = express();
 const port = 3000;

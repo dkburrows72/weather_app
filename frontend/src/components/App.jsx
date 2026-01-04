@@ -4,7 +4,6 @@ import "./App.css";
 import Input from "./Input";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
-import key from "./key";
 import { usePersistedState } from "../hooks/usePersistedState";
 
 const cityHeadings = ["City", "State", "Code"];
