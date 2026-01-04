@@ -35,7 +35,7 @@ function App() {
         }
       });
   }
-  function getWeather(locations, key) {
+  function getWeather(locations) {
     setWeatherData([]);
     for (const loc in locations) {
       axios
@@ -59,6 +59,12 @@ function App() {
     const locationCode = getLocationCode(formData.city, formData.state, key);
     console.log(formData.city, formData.state, locationCode);
     setFormData({ city: "", state: "" });
+  }
+
+  function deleteRow(e) {
+    console.log(e.target.parentElement.outerText.split("\t")[2]);
+    const keyToDelete = e.target.parentElement.outerText.split("\t")[2];
+    setLocationCodes(locationCodes.filter((loc) => loc.key !== keyToDelete));
   }
 
   return (
@@ -99,16 +105,11 @@ function App() {
       </form>
       <table className="table">
         <TableHead headings={cityHeadings} />
-        <TableBody items={locationCodes} />
+        <TableBody items={locationCodes} onClick={deleteRow} />
       </table>
       <button
         className="btn btn-primary btn-sm mb-4"
-        onClick={() =>
-          getWeather(
-            locationCodes.map((loc) => loc.key),
-            key
-          )
-        }
+        onClick={() => getWeather(locationCodes.map((loc) => loc.key))}
       >
         Get Weather
       </button>
