@@ -61,15 +61,51 @@ app.get("/weather/:id", async (req, res) => {
       },
     })
     .then((response) => {
-      const { Day, Night, Temperature } = response.data.DailyForecasts[0];
+      const { Date, Day, Night, Temperature } = response.data.DailyForecasts[0];
       const weather = {
         id: id,
+        date: Date,
         day: Day.IconPhrase,
         night: Night.IconPhrase,
         minTemp: Temperature.Minimum.Value,
         maxTemp: Temperature.Maximum.Value,
       };
       res.status(200).send(JSON.stringify(weather));
+    })
+    .catch((error) => {
+      res.status(500).send("Error fetching weather data");
+    });
+});
+
+app.get("/weather-5day/:id", async (req, res) => {
+  const id = req.params.id;
+
+  axios
+    .get("https://dataservice.accuweather.com/forecasts/v1/daily/5day/" + id, {
+      headers: { Authorization: "Bearer " + key },
+      params: {
+        metric: false,
+        details: false,
+        language: "en-us",
+        format: "json",
+      },
+    })
+    .then((response) => {
+      const weatherArray = [];
+      response.data.DailyForecasts.forEach((forecast) => {
+        const { Date, Day, Night, Temperature } = forecast;
+        const weather = {
+          id: id,
+          date: Date,
+          day: Day.IconPhrase,
+          night: Night.IconPhrase,
+          minTemp: Temperature.Minimum.Value,
+          maxTemp: Temperature.Maximum.Value,
+        };
+        weatherArray.push(weather);
+      });
+
+      res.status(200).send(JSON.stringify(weatherArray));
     })
     .catch((error) => {
       res.status(500).send("Error fetching weather data");
