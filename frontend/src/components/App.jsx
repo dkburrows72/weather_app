@@ -5,6 +5,7 @@ import Input from "./Input";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import { usePersistedState } from "../hooks/usePersistedState";
+import URL from "./url";
 
 const cityHeadings = ["City", "State", "Code"];
 const weatherHeadings = ["City", "Day", "Night", "Min Temp", "Max Temp"];
@@ -22,7 +23,7 @@ function App() {
 
   function getLocationCode(location, adminCode) {
     axios
-      .get("http://localhost:3000/location/" + location + "/" + adminCode)
+      .get(URL + "/location/" + location + "/" + adminCode)
       .then((response) => {
         console.log(response);
         const locationKey = response.data.key;
@@ -38,19 +39,17 @@ function App() {
   function getWeather(locations) {
     setWeatherData([]);
     for (const loc in locations) {
-      axios
-        .get("http://localhost:3000/weather/" + locations[loc])
-        .then((response) => {
-          const { id, day, night, minTemp, maxTemp } = response.data;
-          const weather = {
-            location: locationCodes[loc].city,
-            day: day,
-            night: night,
-            minTemp: minTemp,
-            maxTemp: maxTemp,
-          };
-          setWeatherData((weatherData) => [...weatherData, weather]);
-        });
+      axios.get(URL + "/weather/" + locations[loc]).then((response) => {
+        const { id, day, night, minTemp, maxTemp } = response.data;
+        const weather = {
+          location: locationCodes[loc].city,
+          day: day,
+          night: night,
+          minTemp: minTemp,
+          maxTemp: maxTemp,
+        };
+        setWeatherData((weatherData) => [...weatherData, weather]);
+      });
     }
   }
 
