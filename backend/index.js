@@ -1,7 +1,7 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
-import cors from "cors";
+// import cors from "cors";
 import "dotenv/config";
 
 const key = process.env.API_KEY;
@@ -13,27 +13,16 @@ const API_URL = "";
 const config = {
   headers: { Authorization: `Bearer ${key}` },
 };
-const allowedOrigins = ["http://frontend.com"];
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
-
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept",
+  );
+  next();
+});
+// app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept",
-//   );
-//   next();
-// });
 
 app.get("/location/:city/:state", async (req, res) => {
   const city = req.params.city;
