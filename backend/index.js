@@ -1,7 +1,7 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
-import cors from "cors";
+// import cors from "cors";
 import "dotenv/config";
 
 const key = process.env.API_KEY;
@@ -14,16 +14,16 @@ const config = {
   headers: { Authorization: `Bearer ${key}` },
 };
 
-const corsOptions = {
-  origin: "http://frontend:80", // Replace with your frontend's exact origin
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, // Allow cookies/authorization headers
-  allowedHeaders: "Content-Type, Authorization, X-Requested-With",
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: "http://frontend:80", // Replace with your frontend's exact origin
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true, // Allow cookies/authorization headers
+//   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
+// };
+// app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/location/:city/:state", cors(), async (req, res) => {
+app.get("/location/:city/:state", async (req, res) => {
   const city = req.params.city;
   const state = req.params.state;
 
@@ -53,7 +53,7 @@ app.get("/location/:city/:state", cors(), async (req, res) => {
     });
 });
 
-app.get("/weather/:id", cors(), async (req, res) => {
+app.get("/weather/:id", async (req, res) => {
   const id = req.params.id;
 
   axios
