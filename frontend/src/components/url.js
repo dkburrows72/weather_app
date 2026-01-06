@@ -1,3 +1,3 @@
-const URL = "http://backend:3000";
+const URL = "/api";
 
 export default URL;
