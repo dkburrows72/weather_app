@@ -22,7 +22,9 @@ const config = {
 //   next();
 // });
 
-app.options("*", cors());
+app.options("/location/:city/:state", cors());
+app.options("/weather/:id", cors());
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/location/:city/:state", cors(), async (req, res) => {
