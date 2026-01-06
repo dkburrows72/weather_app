@@ -14,11 +14,11 @@ const config = {
   headers: { Authorization: `Bearer ${key}` },
 };
 // app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept",
-//   );
+// res.setHeader("Access-Control-Allow-Origin", "*");
+// res.header(
+//   "Access-Control-Allow-Headers",
+//   "Origin, X-Requested-With, Content-Type, Accept",
+// );
 //   next();
 // });
 
@@ -50,7 +50,14 @@ app.get("/location/:city/:state", cors(), async (req, res) => {
       const locationKey = { key: response.data[0].Key };
       console.log(locationKey);
       if (locationKey) {
-        res.status(200).send(JSON.stringify(locationKey));
+        res
+          .status(200)
+          .setHeader("Access-Control-Allow-Origin", "*")
+          .header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept",
+          )
+          .send(JSON.stringify(locationKey));
       } else {
         res.status(404).send("Location not found");
       }
@@ -80,7 +87,14 @@ app.get("/weather/:id", cors(), async (req, res) => {
         minTemp: Temperature.Minimum.Value,
         maxTemp: Temperature.Maximum.Value,
       };
-      res.status(200).send(JSON.stringify(weather));
+      res
+        .status(200)
+        .setHeader("Access-Control-Allow-Origin", "*")
+        .header(
+          "Access-Control-Allow-Headers",
+          "Origin, X-Requested-With, Content-Type, Accept",
+        )
+        .send(JSON.stringify(weather));
     })
     .catch((error) => {
       res.status(500).send("Error fetching weather data");
@@ -115,7 +129,14 @@ app.get("/weather-5day/:id", async (req, res) => {
         weatherArray.push(weather);
       });
 
-      res.status(200).send(JSON.stringify(weatherArray));
+      res
+        .status(200)
+        .setHeader("Access-Control-Allow-Origin", "*")
+        .header(
+          "Access-Control-Allow-Headers",
+          "Origin, X-Requested-With, Content-Type, Accept",
+        )
+        .send(JSON.stringify(weatherArray));
     })
     .catch((error) => {
       res.status(500).send("Error fetching weather data");
