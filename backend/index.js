@@ -1,7 +1,7 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
-// import cors from "cors";
+import cors from "cors";
 import "dotenv/config";
 
 const key = process.env.API_KEY;
@@ -13,18 +13,19 @@ const API_URL = "";
 const config = {
   headers: { Authorization: `Bearer ${key}` },
 };
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
-  );
-  next();
-});
-// app.use(cors());
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept",
+//   );
+//   next();
+// });
+
+app.options("*", cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/location/:city/:state", async (req, res) => {
+app.get("/location/:city/:state", cors(), async (req, res) => {
   const city = req.params.city;
   const state = req.params.state;
 
@@ -54,7 +55,7 @@ app.get("/location/:city/:state", async (req, res) => {
     });
 });
 
-app.get("/weather/:id", async (req, res) => {
+app.get("/weather/:id", cors(), async (req, res) => {
   const id = req.params.id;
 
   axios
