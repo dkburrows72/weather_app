@@ -20,7 +20,7 @@ function App() {
   // ]);
   const [weatherData, setWeatherData] = useState([]);
 
-  function getLocationCode(location, adminCode, key) {
+  function getLocationCode(location, adminCode) {
     axios
       .get("http://localhost:3000/location/" + location + "/" + adminCode)
       .then((response) => {
@@ -56,7 +56,7 @@ function App() {
 
   function handleClick(e) {
     e.preventDefault();
-    const locationCode = getLocationCode(formData.city, formData.state, key);
+    const locationCode = getLocationCode(formData.city, formData.state);
     console.log(formData.city, formData.state, locationCode);
     setFormData({ city: "", state: "" });
   }
