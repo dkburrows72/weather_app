@@ -1,10 +1,11 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
-// import cors from "cors";
+import cors from "cors";
 import "dotenv/config";
 
 const key = process.env.API_KEY;
+console.log("API Key:", key);
 
 const app = express();
 const port = 3000;
@@ -21,6 +22,7 @@ const config = {
 //   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
 // };
 // app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/location/:city/:state", async (req, res) => {
